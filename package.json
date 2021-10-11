@@ -1,6 +1,6 @@
 {
-  "name": "leaflet-distortableimage",
-  "version": "0.21.8",
+  "name": "@fidera/leaflet-distortableimage",
+  "version": "1.0.0",
   "description": "Leaflet plugin enabling image overlays to be distorted, stretched, and warped (built for Public Lab's MapKnitter: http://publiclab.org).",
   "engines": {
     "node": ">=10.0.0"
@@ -18,7 +18,7 @@
   "main": "dist/leaflet.distortableimage.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/publiclab/Leaflet.DistortableImage.git"
+    "url": "https://github.com/fidera/Leaflet.DistortableImage.git"
   },
   "keywords": [
     "leaflet",

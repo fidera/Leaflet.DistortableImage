@@ -36,32 +36,36 @@ L.DistortableImageOverlay = L.ImageOverlay.extend({
 
     // Have to wait for the image to load because need to access its w/h
     L.DomEvent.on(this.getElement(), 'load', () => {
-      this.getPane().appendChild(this.getElement());
-      this._initImageDimensions();
-
-      if (this.options.rotation) {
-        var units = this.options.rotation.deg ? 'deg' : 'rad';
-        this.setAngle(this.options.rotation[units], units);
-      } else {
-        this.rotation = {deg: 0, rad: 0};
-        this._reset();
-      }
-
-      /* Initialize default corners if not already set */
-      if (!this._corners) {
-        if (map.options.zoomAnimation && L.Browser.any3d) {
-          map.on('zoomanim', this._animateZoom, this);
+      try {
+        this.getPane().appendChild(this.getElement());
+        this._initImageDimensions();
+  
+        if (this.options.rotation) {
+          var units = this.options.rotation.deg ? 'deg' : 'rad';
+          this.setAngle(this.options.rotation[units], units);
+        } else {
+          this.rotation = {deg: 0, rad: 0};
+          this._reset();
         }
-      }
-
-      /** if there is a featureGroup, only its editable option matters */
-      var eventParents = this._eventParents;
-      if (eventParents) {
-        this.eP = eventParents[Object.keys(eventParents)[0]];
-        if (this.eP.editable) { this.editing.enable(); }
-      } else {
-        if (this.editable) { this.editing.enable(); }
-        this.eP = null;
+  
+        /* Initialize default corners if not already set */
+        if (!this._corners) {
+          if (map.options.zoomAnimation && L.Browser.any3d) {
+            map.on('zoomanim', this._animateZoom, this);
+          }
+        }
+  
+        /** if there is a featureGroup, only its editable option matters */
+        var eventParents = this._eventParents;
+        if (eventParents) {
+          this.eP = eventParents[Object.keys(eventParents)[0]];
+          if (this.eP.editable) { this.editing.enable(); }
+        } else {
+          if (this.editable) { this.editing.enable(); }
+          this.eP = null;
+        }
+      } catch (err) {
+        return;
       }
     });
 
