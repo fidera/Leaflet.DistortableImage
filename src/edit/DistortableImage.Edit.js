@@ -23,6 +23,11 @@ L.DistortableImage.Edit = L.Handler.extend({
   /* Run on image selection. */
   addHooks() {
     var overlay = this._overlay;
+    
+    /* Actions performed on overlays using the toolbar */
+    this.IOL_ACTIONS = Object.freeze({
+      DELETE: 'DELETE',
+    });
 
     this.editActions = this.options.actions;
 
@@ -383,7 +388,19 @@ L.DistortableImage.Edit = L.Handler.extend({
     if (this.isMode('lock') || !this.hasTool(L.DeleteAction)) { return; }
 
     var choice = L.DomUtil.confirmDelete();
+
     if (!choice) { return; }
+
+    if (ov.options.meta && ov.options.meta.id) {
+      var evt = new CustomEvent('iolAction', {
+        detail: {
+          id: ov.options.meta.id,
+          action: this.IOL_ACTIONS.DELETE,
+          value: choice
+        }
+      });
+      document.body.dispatchEvent(evt)
+    }
 
     this._removeToolbar();
 
