@@ -2,6 +2,12 @@
 
 ## [unreleased]
 
+## [1.0.1] - 2021-10-13
+
+### Changes
+
+- Added build using GitHub actions
+
 ## [1.0.0] - 2021-10-12
 
 ### Added
