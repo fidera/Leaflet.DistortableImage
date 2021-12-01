@@ -1,5 +1,11 @@
 # Leaflet.DistortableImage
 
+## Setup for development
+
+Copy the repository and install locally using `npm install ../leaflet-distortableimage`. After making changes, run `npm run build`.
+
+## Original README
+
 [![Build Status](https://travis-ci.org/publiclab/Leaflet.DistortableImage.svg?branch=main)](https://travis-ci.org/publiclab/Leaflet.DistortableImage)
 [![Code of Conduct](https://img.shields.io/badge/code-of%20conduct-brightgreen.svg)](https://publiclab.org/conduct)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/publiclab/Leaflet.DistortableImage/issues)
