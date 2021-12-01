@@ -2,6 +2,10 @@
 
 ## [unreleased]
 
+### Added
+
+- Added events for image stacking related actions (bring to front & back)
+
 ## [1.0.1] - 2021-10-13
 
 ### Changes

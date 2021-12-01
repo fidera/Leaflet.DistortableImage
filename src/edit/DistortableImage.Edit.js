@@ -1,3 +1,22 @@
+/**
+ * Emited events
+ * Note: Find a way to make this exportable
+ */
+const EVENTS = Object.freeze({
+  ACTION: "IMAGE_OVERLAY",
+});
+
+/**
+ * Emited event actions
+ * Permormed on overlays using the toolbar
+ * Note: Find a way to make this exportable
+ */
+const EVENT_ACTIONS = Object.freeze({
+  DELETE: "DELETE",
+  STACK_UP: "STACK_UP",
+  STACK_DOWN: "STACK_DOWN",
+});
+
 L.DistortableImage = L.DistortableImage || {};
 
 // holds the keybindings & toolbar API for an individual image instance
@@ -23,11 +42,6 @@ L.DistortableImage.Edit = L.Handler.extend({
   /* Run on image selection. */
   addHooks() {
     var overlay = this._overlay;
-    
-    /* Actions performed on overlays using the toolbar */
-    this.IOL_ACTIONS = Object.freeze({
-      DELETE: 'DELETE',
-    });
 
     this.editActions = this.options.actions;
 
@@ -392,10 +406,10 @@ L.DistortableImage.Edit = L.Handler.extend({
     if (!choice) { return; }
 
     if (ov.options.meta && ov.options.meta.id) {
-      var evt = new CustomEvent('iolAction', {
+      var evt = new CustomEvent(EVENTS.ACTION, {
         detail: {
           id: ov.options.meta.id,
-          action: this.IOL_ACTIONS.DELETE,
+          action: EVENT_ACTIONS.DELETE,
           value: choice
         }
       });
@@ -472,8 +486,18 @@ L.DistortableImage.Edit = L.Handler.extend({
 
     if (!t || !this.hasTool(L.StackAction)) { return; }
 
+    // Image is brought to front
+    var evt = new CustomEvent(EVENTS.ACTION, {
+      detail: {
+        id: this._overlay.options.meta.id,
+        action: EVENT_ACTIONS.STACK_UP,
+      }
+    });
+    document.body.dispatchEvent(evt)
+    
     this._toggledImage = false;
     this._overlay.bringToFront();
+
     this._refresh();
   },
 
@@ -481,6 +505,15 @@ L.DistortableImage.Edit = L.Handler.extend({
     var t = this._toggledImage;
 
     if (t || !this.hasTool(L.StackAction)) { return; }
+
+    // Image is brought to back
+    var evt = new CustomEvent(EVENTS.ACTION, {
+      detail: {
+        id: this._overlay.options.meta.id,
+        action: EVENT_ACTIONS.STACK_DOWN,
+      }
+    });
+    document.body.dispatchEvent(evt)
 
     this._toggledImage = true;
     this._overlay.bringToBack();
